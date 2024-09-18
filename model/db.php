@@ -1,20 +1,11 @@
-<?php
-// Function to establish a PDO database connection
-function connectDB() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "go_loan";
+$conn = mysqli_connect(
+    getenv('DB_HOST'),       // Database host (e.g., localhost or the Coolify server)
+    getenv('DB_USERNAME'),   // Database username
+    getenv('DB_PASSWORD'),   // Database password
+    getenv('DB_DATABASE'),   // Database name
+    getenv('DB_PORT') ?: '3306' // Database port, default to 3306 if not set
+);
 
-    try {
-        // Create PDO connection
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        // Set PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $conn;
-    } catch(PDOException $e) {
-        // Handle connection errors
-        die("Connection failed: " . $e->getMessage());
-    }
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
-?>
