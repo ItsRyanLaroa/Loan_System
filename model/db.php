@@ -1,11 +1,21 @@
-$conn = mysqli_connect(
-    getenv('DB_HOST'),       // Database host (e.g., localhost or the Coolify server)
-    getenv('DB_USERNAME'),   // Database username
-    getenv('DB_PASSWORD'),   // Database password
-    getenv('DB_DATABASE'),   // Database name
-    getenv('DB_PORT') ?: '3306' // Database port, default to 3306 if not set
-);
+<?php
+// File: model/db_connect.php
 
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+function connectDB() {
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "go_loan";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
 }
+?>
+
