@@ -1,21 +1,21 @@
 <?php
-// File: model/db_connect.php
-
+// Function to establish a PDO database connection
 function connectDB() {
     $servername = "localhost";
     $username = "root";
     $password = "";
     $dbname = "go_loan";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    try {
+        // Create PDO connection
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        // Set PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
+    } catch(PDOException $e) {
+        // Handle connection errors
+        die("Connection failed: " . $e->getMessage());
     }
-
-    return $conn;
 }
 ?>
 
